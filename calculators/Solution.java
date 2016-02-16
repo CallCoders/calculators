@@ -18,21 +18,19 @@ public class Solution {
         //Создаем экземпляр калькулятора заданного типа
         int calcType = byteBuffer[0];
         Calc calc = createCalc(calcType);
+        
+        //Переодим оставшиеся данные в строку
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < byteBuffer.length; i++) {
+            if (!(byteBuffer[i] == 13) && !(byteBuffer[i] == 10)) {
+                sb.append(((char) byteBuffer[i]));
+            }
+        }
+        String formula = sb.toString();
 
-        int x = byteBuffer[1];
-        System.out.println();
+        System.out.print(formula);
 
-        //Разбор строки
-//        double x;
-//        double y0;
-//        byte
-//        for (int i = 1; i < byteBuffer.length; i++) {
-//            while (true) {
-//                x = Integer.parseInt(byteBuffer[i]);
-//                i++;
-//
-//            }
-//        }
+
     }
 
     public static Calc createCalc(int typeCalc) {
