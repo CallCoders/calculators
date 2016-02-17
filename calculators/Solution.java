@@ -6,7 +6,7 @@ import java.io.*;
  * Created by PavelOsipenko on 16.02.2016.
  */
 public class Solution {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         //Читаем из аргумента строки имя (пусть) файла
         String fileName = args[0];
 
@@ -14,12 +14,8 @@ public class Solution {
         FileInputStream fis = new FileInputStream(fileName);
         byte[] byteBuffer = new byte[fis.available()];
         fis.read(byteBuffer);
-
-        //Создаем экземпляр калькулятора заданного типа
-        int calcType = byteBuffer[0];
-        Calc calc = createCalc(calcType);
         
-        //Переодим оставшиеся данные в строку
+        //Читаем формулу из файла
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < byteBuffer.length; i++) {
             if (!(byteBuffer[i] == 13) && !(byteBuffer[i] == 10)) {
@@ -28,23 +24,27 @@ public class Solution {
         }
         String formula = sb.toString();
 
-        System.out.print(formula);
+        //Создаем экземпляр калькулятора заданного типа
+        int calcType = byteBuffer[0];
+//        Calc calc = createCalc(calcType);
 
-
+        System.out.println("Формула: " + formula);
+        SimpleCalc calc = new SimpleCalc();
+        System.out.println("Результат: " + calc.calculate(formula));
     }
 
-    public static Calc createCalc(int typeCalc) {
-        switch (typeCalc) {
-            case 1:
-                return new SimpleCalc();
-            case 2:
-                return new MemCalc();
-            case 3:
-                return new EngineeringCalc();
-            case 4:
-                return new EngineeringMemCalc();
-            default:break;
-        }
-        return null;
-    }
+//    public static Calc createCalc(int typeCalc) {
+//        switch (typeCalc) {
+//            case 1:
+//                return new SimpleCalc();
+//            case 2:
+//                return new MemCalc();
+//            case 3:
+//                return new EngineeringCalc();
+//            case 4:
+//                return new EngineeringMemCalc();
+//            default:break;
+//        }
+//        return null;
+//    }
 }
